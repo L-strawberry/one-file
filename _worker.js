@@ -820,11 +820,12 @@ function renderAdminPage(env, request) {
                 if (res.ok) {
                     originalConfigsJson = JSON.stringify(configs); // 更新原始记录，隐藏保存栏
                     markModified(); 
+                    showToast('✅ 启停状态已同步至 KV 数据库');
                 } else {
-                    showToast('保存到 KV 失败，请重试');
+                    showToast('❌ 同步失败，未能写入 KV，请稍后重试');
                 }
             } catch (e) {
-                showToast('网络错误，同步失败');
+                showToast('⚠️ 网络异常，同步未完成');
             }
         }
 
