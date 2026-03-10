@@ -194,7 +194,7 @@ function renderAdminPage(env, request) {
             darkMode: 'class'
         }
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
        
     <script>
@@ -947,7 +947,7 @@ function renderAdminPage(env, request) {
             if(res.ok) {
                 originalConfigsJson = JSON.stringify(configs);
                 markModified(); 
-                showToast('配置已同步至 KV 数据库');
+                showToast('✅ 配置已同步至 KV 数据库');
             }
         }        
      
@@ -1403,12 +1403,39 @@ function renderAdminPage(env, request) {
         
         function showQRCode(url) {
             const container = document.getElementById('qrcode');
+            if (!container) return;
+
+            // 1. 清空旧内容
             container.innerHTML = "";
-            new QRCode(container, { text: url, width: 180, height: 180, colorDark : "#1e293b", colorLight : "#ffffff", correctLevel : QRCode.CorrectLevel.H });
-            document.getElementById('qrModal').classList.add('open');
+
+            // 2. 检查是否有有效 URL
+            if (!url) {
+                alert("二维码链接无效");
+                return;
+            }
+
+            try {
+                // 3. 生成二维码
+                new QRCode(container, {
+                    text: url,
+                    width: 180,
+                    height: 180,
+                    colorDark: "#1e293b",
+                    colorLight: "#ffffff",
+                    // 建议改为 M，这样在长链接下二维码会更清晰，更容易扫码
+                    correctLevel: QRCode.CorrectLevel.M 
+                });
+
+                // 4. 显示弹窗
+                document.getElementById('qrModal').classList.add('open');
+            } catch (e) {
+                console.error("二维码生成失败:", e);
+            }
         }
 
-        function closeQRModal() { document.getElementById('qrModal').classList.remove('open'); }
+        function closeQRModal() { 
+            document.getElementById('qrModal').classList.remove('open'); 
+        }
     </script>
 
     
