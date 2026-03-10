@@ -1422,8 +1422,8 @@ function renderAdminPage(env, request) {
                     height: 180,
                     colorDark: "#1e293b",
                     colorLight: "#ffffff",
-                    // 建议改为 M，这样在长链接下二维码会更清晰，更容易扫码
-                    correctLevel: QRCode.CorrectLevel.M 
+                    // 建议改为 L，这样在长链接下二维码会更清晰，更容易扫码
+                    correctLevel: QRCode.CorrectLevel.L 
                 });
 
                 // 4. 显示弹窗
